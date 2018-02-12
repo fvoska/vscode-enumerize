@@ -1,32 +1,31 @@
 'use strict';
 import * as vscode from 'vscode';
-import { Range, TextLine, InputBoxOptions, TextEditor, TextEditorEdit, QuickPickOptions } from 'vscode';
+import { Range, TextLine, InputBoxOptions, TextEditor, TextEditorEdit, QuickPickOptions, ExtensionContext, Selection } from 'vscode';
 
-export function activate(context: vscode.ExtensionContext): void {
+export function activate(context: ExtensionContext): void {
     const enumerizeSelection = vscode.commands.registerCommand('extension.enumerizeSelection', async () => {
         const editor: TextEditor = vscode.window.activeTextEditor;
 
         // Get selection range
-        const selectionRange = editor.selection;
+        let selection: Selection = editor.selection;
 
-        if (selectionRange.start.line === selectionRange.end.line && selectionRange.start.character === selectionRange.end.character) {
+        if (selection.start.line === selection.end.line && selection.start.character === selection.end.character) {
             vscode.window.showInformationMessage('Selection empty - enumerizing whole document');
 
-            const documentRange = getWholeDocumentRange(editor);
-            enumerize(editor, documentRange)
-        } else {
-            enumerize(editor, selectionRange);
+            selection = getWholeDocumentSelection(editor);
         }
+
+        enumerize(editor, selection);
     });
     context.subscriptions.push(enumerizeSelection);
 
     const enumerizeDocument = vscode.commands.registerCommand('extension.enumerize', async () => {
         const editor: TextEditor = vscode.window.activeTextEditor;
 
-        // Get full document range
-        const documentRange = getWholeDocumentRange(editor);
+        // Get full document selection
+        const documentSelection = getWholeDocumentSelection(editor);
 
-        enumerize(editor, documentRange);
+        enumerize(editor, documentSelection);
     });
     context.subscriptions.push(enumerizeDocument);
 }
@@ -104,14 +103,12 @@ async function enumerize(editor: TextEditor, documentRange: Range): Promise<bool
     return Promise.resolve(true);
 }
 
-function decapitalizeFirstLetter(string) {
+function decapitalizeFirstLetter(string: string) {
     return (string.charAt(0) as string).toLowerCase() + string.slice(1);
 }
 
-function getWholeDocumentRange(editor: TextEditor): Range {
-    const firstLine = editor.document.lineAt(0);
-    const lastLine = editor.document.lineAt(editor.document.lineCount - 1);
-    const documentRange: Range = new Range(0, firstLine.range.start.character, editor.document.lineCount - 1, lastLine.range.end.character);
-
-    return documentRange;
+function getWholeDocumentSelection(editor: TextEditor): Selection {
+    const firstLine: TextLine = editor.document.lineAt(0);
+    const lastLine: TextLine = editor.document.lineAt(editor.document.lineCount - 1);
+    return new Selection(0, firstLine.range.start.character, editor.document.lineCount - 1, lastLine.range.end.character);
 }
