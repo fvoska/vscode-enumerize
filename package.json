@@ -2,7 +2,7 @@
   "name": "enumerize",
   "displayName": "enumerize",
   "description": "Converts list of values into enum with extra data",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "publisher": "fvoska",
   "license": "MIT",
   "repository": {
