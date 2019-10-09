@@ -1,43 +1,48 @@
 {
-    "name": "enumerize",
-    "displayName": "enumerize",
-    "description": "Converts list of values into enum with extra data",
-    "version": "0.0.1",
-    "publisher": "fvoska",
-    "engines": {
-        "vscode": "^1.19.0"
-    },
-    "categories": [
-        "Other"
-    ],
-    "activationEvents": [
-        "onCommand:extension.enumerize",
-        "onCommand:extension.enumerizeSelection"
-    ],
-    "main": "./out/extension",
-    "contributes": {
-        "commands": [
-            {
-                "command": "extension.enumerize",
-                "title": "Enumerize"
-            },
-            {
-                "command": "extension.enumerizeSelection",
-                "title": "Enumerize selection"
-            }
-        ]
-    },
-    "scripts": {
-        "vscode:prepublish": "npm run compile",
-        "compile": "tsc -p ./",
-        "watch": "tsc -watch -p ./",
-        "postinstall": "node ./node_modules/vscode/bin/install",
-        "test": "npm run compile && node ./node_modules/vscode/bin/test"
-    },
-    "devDependencies": {
-        "typescript": "^2.6.1",
-        "vscode": "^1.1.6",
-        "@types/node": "^7.0.43",
-        "@types/mocha": "^2.2.42"
-    }
+  "name": "enumerize",
+  "displayName": "enumerize",
+  "description": "Converts list of values into enum with extra data",
+  "version": "0.0.1",
+  "publisher": "fvoska",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fvoska/vscode-enumerize.git"
+  },
+  "engines": {
+    "vscode": "^1.19.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onCommand:extension.enumerize",
+    "onCommand:extension.enumerizeSelection"
+  ],
+  "main": "./out/extension",
+  "contributes": {
+    "commands": [
+      {
+        "command": "extension.enumerize",
+        "title": "Enumerize"
+      },
+      {
+        "command": "extension.enumerizeSelection",
+        "title": "Enumerize selection"
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "postinstall": "node ./node_modules/vscode/bin/install",
+    "test": "npm run compile && node ./node_modules/vscode/bin/test"
+  },
+  "devDependencies": {
+    "@types/mocha": "^2.2.42",
+    "@types/node": "^7.0.43",
+    "typescript": "^2.6.1",
+    "vscode": "^1.1.36"
+  }
 }
